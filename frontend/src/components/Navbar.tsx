@@ -5,18 +5,19 @@ import { useEffect, useState } from 'react'
 import { getCart } from '@/services/api'
 import { toast } from 'sonner'
 import { Cart as CartType } from '@/types'
+import { useAuth } from '@/contexts/AuthContext'
 
 const Navbar = () => {
-  const token = localStorage.getItem('token')
+  const { isAuthenticated, logout } = useAuth()
   const [cartItemsCount, setCartItemsCount] = useState(0)
 
   useEffect(() => {
-    if (token) {
+    if (isAuthenticated) {
       fetchCartItems()
     } else {
       setCartItemsCount(0)
     }
-  }, [token])
+  }, [isAuthenticated])
 
   const fetchCartItems = async () => {
     try {
@@ -34,7 +35,7 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
+    logout()
     window.location.href = '/login'
   }
 
@@ -63,7 +64,7 @@ const Navbar = () => {
               Products
             </Link>
             
-            {token ? (
+            {isAuthenticated ? (
               <>
                 <Link to="/cart">
                   <Button variant="ghost" size="icon" className="relative">

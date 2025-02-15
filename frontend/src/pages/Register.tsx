@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { ArrowRight, User, Mail, Lock } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 const registerSchema = z.object({
   name: z.string().min(2),
@@ -26,6 +27,7 @@ const registerSchema = z.object({
 const Register = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -40,7 +42,7 @@ const Register = () => {
     try {
       setLoading(true)
       const response = await registerUser(values.name, values.email, values.password)
-      localStorage.setItem('token', response.token.access.token)
+      login(response.token.access.token)
       toast.success('Registered successfully')
       navigate('/products')
     } catch (error: any) {
