@@ -16,8 +16,9 @@ const Cart = () => {
     try {
       const data = await getCart()
       setCart(data)
-    } catch (error) {
-      toast.error('Failed to fetch cart')
+    } catch (error: any) {
+      const errorData = error.response?.data
+      toast.error(errorData?.message || 'Failed to fetch cart')
     } finally {
       setLoading(false)
     }
@@ -27,8 +28,9 @@ const Cart = () => {
     try {
       await updateCart(productId, quantity)
       await fetchCart()
-    } catch (error) {
-      toast.error('Failed to update cart')
+    } catch (error: any) {
+      const errorData = error.response?.data
+      toast.error(errorData?.message || 'Failed to update cart')
     }
   }
 
@@ -37,8 +39,9 @@ const Cart = () => {
       await checkout()
       toast.success('Checkout successful')
       await fetchCart()
-    } catch (error) {
-      toast.error('Checkout failed')
+    } catch (error: any) {
+      const errorData = error.response?.data
+      toast.error(errorData?.message || 'Checkout failed')
     }
   }
 

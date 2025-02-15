@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt")
 const { userService } = require(".")
+const ApiError = require("../utils/ApiError")
+const httpStatus = require("http-status")
 
 
 
@@ -10,7 +12,7 @@ const loginUserWithEmailAndPassword =  async(email,password)=>{
 //      throw new Error("Password Incorrect")
 //   }
   if(!user || !(await user.isPasswordMatch(password))){
-    throw new Error("Invalid credentials")
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid credentials")
   }
 
   return user;

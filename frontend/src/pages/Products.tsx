@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getProducts } from '@/services/api'
 import { Product } from '@/types'
 import ProductCard from '@/components/ProductCard'
+import { toast } from 'sonner'
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([])
@@ -12,8 +13,9 @@ const Products = () => {
       try {
         const data = await getProducts()
         setProducts(data)
-      } catch (error) {
-        console.error('Failed to fetch products:', error)
+      } catch (error: any) {
+        const errorData = error.response?.data
+        toast.error(errorData?.message || 'Failed to fetch products')
       } finally {
         setLoading(false)
       }

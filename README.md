@@ -152,10 +152,33 @@ The application uses JWT (JSON Web Token) based authentication. Protected routes
 - paymentOption (String)
 
 ## Error Handling
-The application uses a centralized error handling mechanism through the `catchAsync` utility. Common error responses include:
-- 401: Authentication errors
-- 404: Resource not found
-- 400: Bad request/validation errors
+The application uses a centralized error handling mechanism that returns consistent error responses in the following format:
+
+```json
+{
+  "success": false,
+  "status": "fail" | "error",
+  "message": "Error description"
+  // Stack trace included in development environment
+}
+```
+
+Common HTTP status codes:
+- 400 (BAD_REQUEST): Invalid input/parameters
+- 401 (UNAUTHORIZED): Authentication failed
+- 403 (FORBIDDEN): Authorization failed
+- 404 (NOT_FOUND): Resource not found
+- 409 (CONFLICT): Resource conflict (e.g., duplicate email)
+- 500 (INTERNAL_SERVER_ERROR): Server errors
+
+Example error response:
+```json
+{
+  "success": false,
+  "status": "fail",
+  "message": "Product already in the cart"
+}
+```
 
 ## Environment Variables
 Required environment variables in `.env` file:

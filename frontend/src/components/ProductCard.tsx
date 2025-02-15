@@ -13,8 +13,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
     try {
       await addToCart(product._id, 1)
       toast.success('Added to cart')
-    } catch (error) {
-      toast.error('Failed to add to cart')
+    } catch (error: any) {
+      const errorData = error.response?.data
+      toast.error(errorData?.message || 'Failed to add to cart')
     }
   }
 

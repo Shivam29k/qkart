@@ -37,11 +37,12 @@ const Login = () => {
     try {
       setLoading(true)
       const response = await login(values.email, values.password)
-      localStorage.setItem('token', response.token.access.token)
+      localStorage.setItem('token', response.tokens.access.token)
       toast.success('Logged in successfully')
       navigate('/products')
-    } catch (error) {
-      toast.error('Invalid credentials')
+    } catch (error: any) {
+      const errorData = error.response?.data
+      toast.error(errorData?.message || 'Login failed')
     } finally {
       setLoading(false)
     }

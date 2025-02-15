@@ -1,11 +1,13 @@
 const { User } = require("../models/")
 const bcrypt = require("bcrypt")
+const ApiError = require("../utils/ApiError")
+const httpStatus = require("http-status")
 
 
 
 const createUser = async (userBody)=>{
     if(await User.isEmailTaken(userBody.email)){
-        throw new Error("Email already Taken")
+        throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken")
     }
     // const hashedPassword = await bcrypt.hash(userBody.password,10)
     const user = await User.create({...userBody})

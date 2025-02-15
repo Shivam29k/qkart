@@ -7,6 +7,7 @@ import Register from "@/pages/Register"
 import Products from "@/pages/Products"
 import Cart from "@/pages/Cart"
 import ProtectedRoute from "@/components/ProtectedRoute"
+import UserProfile from '@/pages/UserProfile'
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Cart />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
                 </ProtectedRoute>
               } 
             />

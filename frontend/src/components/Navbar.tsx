@@ -28,9 +28,11 @@ const Navbar = () => {
                     <ShoppingCart className="h-5 w-5" />
                   </Button>
                 </Link>
-                <Button variant="ghost" size="icon">
-                  <User className="h-5 w-5" />
-                </Button>
+                <Link to="/profile">
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </Link>
                 <Button variant="outline" onClick={handleLogout}>
                   Logout
                 </Button>

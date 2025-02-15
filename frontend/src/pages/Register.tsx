@@ -42,8 +42,9 @@ const Register = () => {
       localStorage.setItem('token', response.token.access.token)
       toast.success('Registered successfully')
       navigate('/products')
-    } catch (error) {
-      toast.error('Registration failed')
+    } catch (error: any) {
+      const errorData = error.response?.data
+      toast.error(errorData?.message || 'Registration failed')
     } finally {
       setLoading(false)
     }
